@@ -1,0 +1,3 @@
+$x 'CITY-OF' Portugal OR $x 'CITY-OF' Espanha
+=> 
+add ($x 'CITY-OF' PenIberica).

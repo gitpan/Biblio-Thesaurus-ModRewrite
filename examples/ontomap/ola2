@@ -1,0 +1,1 @@
+"Castelo de Paiva" $r $t => sub { print "<b>$r</b> $t<br>"; }.

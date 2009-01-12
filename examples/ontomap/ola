@@ -1,0 +1,7 @@
+my $code=<<'EOF';
+$ARGV[0] $r $t => sub { print "<b>$r</b> $t<br>"; }.
+EOF
+
+$code =~ s/\$ARGV\[(\d+)\]/$ARGV[$1]/ge;
+
+print $code;

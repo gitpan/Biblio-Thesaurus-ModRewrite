@@ -1,0 +1,6 @@
+$city 'CITY-OF' $country => sub{{
+  unless($obj->hasRelation($city,'IS-A','city')) 
+    { print "Error: $city is not a city\n"; }; 
+  unless($obj->hasRelation($country,'IS-A','country')) 
+    { print "Error: $country is not a country\n"; }; 
+}.

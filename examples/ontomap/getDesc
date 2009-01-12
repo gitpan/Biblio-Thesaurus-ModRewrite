@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+use lib '/home/smash/modrewrite/lib';
+
+use Biblio::Thesaurus::ModRewrite::Embed;
+
+OML getDesc
+$ARGV[0] $r $t => sub { print "<b>$r</b> $t<br>"; }.
+ENDOML
+
+print "$ARGV[0]<hr>";
+$ARGV[0] =~ m/\s/ and $ARGV[0] = "'".$ARGV[0]."'";
+getDesc('/home/smash/ontomap/ontomap.iso',$ARGV[0]);

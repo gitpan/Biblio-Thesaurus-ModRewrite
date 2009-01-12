@@ -1,0 +1,3 @@
+$a 'CITY-OF' Portugal AND $b 'CITY-OF' Espanha
+=> 
+add ($a 'VIZINHO-OF' $b).
