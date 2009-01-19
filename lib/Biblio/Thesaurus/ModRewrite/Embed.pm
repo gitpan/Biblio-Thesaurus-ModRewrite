@@ -13,7 +13,7 @@ in Perl code.
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -25,11 +25,18 @@ our $VERSION = '0.01';
 
   proc('ontology.iso');
 
-=cut
+=head1 DESCRIPTION
+
+This module can be used to embed OML programs in Perl source code. This
+module works as a filter for the source code, so you should only need
+to load it.
+
+=head1 FUNCTIONS
 
 =head2 buildOML
 
-This function ...
+This function is used to create a new funcion to execute the OML code
+found.
 
 =cut
 
@@ -76,7 +83,7 @@ print Dumper $code;
 
 =head2 FILTER
 
-Filter ...
+This filters your Perl source code.
 
 =cut
 
@@ -89,5 +96,26 @@ FILTER {
 
 	$_;
 };
+
+=head1 EXAMPLES
+
+Look in the F<examples> and F<bin> directory for sample programs.
+
+=head1 AUTHOR
+
+Nuno Carvalho, C<< <smash@cpan.org> >>
+
+J.Joao Almeida, C<< <jj@di.uminho.pt> >>
+
+Alberto Simoes, C<< <albie@alfarrabio.di.uminho.pt> >>
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008 Nuno Carvalho, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
 
 1;

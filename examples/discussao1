@@ -1,0 +1,35 @@
+  $a capital $b isa "pais" ==> ...
+
+  $a capital $b ==> add($b temComoCapital $a) 
+                    add($a isa cidade) 
+                    add($b isa país ).
+
+  t1 $r $a      ==> sub{ warn( "isa reclexia para $a\n"); }
+  t1 isa $a     ==> sub{ warn( "isa reclexia para $a\n"); }
+  $a isa $a     ==> sub{ warn( "isa reclexia para $a\n"); }
+
+  $a r $b /\ $a r1 $c === $a(r $b, r1 $c)
+
+===
+
+ antecedente :  ... --> (idvar --> v )*
+
+ VrV   ==> { {v1=> x, v2=>y } | x in allterms /\ y in term(x)(r) }
+ VrVrp ==> { {v1=> x, v2=>y } | x in allterms /\ y in term(x)(r) /\ term(y,r,p) }
+ trV   ==> { {v1=> x} | x in term(t)(r) }
+ tVV   ==> { {v1=> x, v2=>y } | x in dom(term(t)) /\ y in term(t)(x) }
+
+ V(rV,rV) ==>
+  { {v1=> x, v2=>y ,v3=>z} | x in allterms 
+                             /\ y in term(x)(r) /\ z in term(x,r2) }
+
+
+
+ for $v (v1, v1 vn){
+   $cons =~ s/\$$v\b/\$para->{$v}/g;
+ } 
+ $c = eval($cons); 
+
+ for( R ) { 
+    conseq( $_) }
+ }

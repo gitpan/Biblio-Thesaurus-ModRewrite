@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:                Biblio-Thesaurus-ModRewrite
-version:             0.01
-abstract:            The great new Biblio::Thesaurus::ModRewrite!
+version:             0.02
+abstract:            a module to manipulate ontologies
 license:             ~
 author:              
     - Nuno Carvalho <smash@cpan.org>

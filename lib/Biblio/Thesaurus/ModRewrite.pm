@@ -5,31 +5,56 @@ use warnings;
 
 =head1 NAME
 
-Biblio::Thesaurus::ModRewrite - The great new Biblio::Thesaurus::ModRewrite!
+Biblio::Thesaurus::ModRewrite - a module to manipulate ontologies
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
   use Biblio::Thesaurus;
   use Biblio::Thesaurus::ModRewrite;
 
-  my $code = "gato BT felino => add (felino NT gato).";
+  my $code = "Lisbon 'city-of' Portugal => add (Lisbon 'city-of' Europe).";
 
   $thesaurus = thesaurusLoad($file);
   $obj = Biblio::Thesaurus::ModRewrite->new($thesaurus);
 
   $obj->process($code);
 
-=head1 Description
+=head1 DESCRIPTION
 
-TODO
+This module implements a compiler to run programs written in a domain
+specific language that can be used to manipulate information in
+ontologies. This domain specific language is called OML and is 
+descibed in the next section.
+
+=head1 OML
+
+OML is a domain specific language that can be used to describe operations
+that manipulate information in a ontology. Programs written in OML are
+a set of rules that are executed in order, each rule looks something like:
+
+  pattern => action .
+
+Which means that when the C<pattern> is found the given C<action> block
+is executed.
+
+=head2 Patterns
+
+Patterns describe information in the ontology. A pattern can be used to
+represent terms, relations, relations between terms, or any combination
+of any of these.
+
+=head2 Actions
+
+The action block is used to describe the operations that are going to be
+executed if a given pattern is found.
 
 =cut
 
@@ -50,9 +75,12 @@ my $target = '';
 
 my $DEBUG = 1;
 
+=head1 FUNCTIONS
+
 =head2 new
 
-TODO
+This function creates a new object and stores the source file for
+the thesaurus given as argument.
 
 =cut
 
@@ -66,7 +94,8 @@ sub new {
 
 =head2 process
 
-TODO
+This funcion processes source code written in OML. This and C<new> should
+be the only functions you need to call to use this module.
 
 =cut
 
@@ -89,7 +118,8 @@ sub process {
 
 =head2 parseFile
 
-TODO
+This function parses the source code and builds a parsing tree. The
+parser is defined in the Biblio::Thesaurus::ModRewrite::Parser module.
 
 =cut
 
@@ -105,7 +135,8 @@ sub parseFile {
 
 =head2 buildSemanticTree
 
-TODO
+This function calculates the solution node for every pattern in the
+parsing tree.
 
 =cut
 
@@ -122,7 +153,7 @@ sub buildSemanticTree {
 
 =head2 calc_set
 
-TODO
+This funcion calculates the solution for a given pattern.
 
 =cut
 
@@ -241,7 +272,7 @@ sub calc_set {
 
 =head2 _intersect
 
-TODO
+This function is used by C<calc_set> and should not be called on it's own.
 
 =cut
 
@@ -275,7 +306,7 @@ sub _intersect {
 
 =head2 _comum
 
-TODO
+This function is used by C<calc_set> and should not be called on it's own.
 
 =cut
 
@@ -293,7 +324,7 @@ sub _comum {
 
 =head2 _union
 
-TODO
+This function is used by C<calc_set> and should not be called on it's own.
 
 =cut
 
@@ -316,7 +347,7 @@ sub _union {
 
 =head2 run_program
 
-TODO
+This function executes every action for each rule in an OML program.
 
 =cut
 
@@ -361,6 +392,8 @@ my %callback = (
 
 =head2 execute
 
+This function is used to execute an action.
+
 =cut
 
 sub execute {
@@ -392,5 +425,26 @@ sub execute {
         }
     }
 }
+
+=head1 EXAMPLES
+
+Look in the F<examples> and F<bin> directory for sample programs.
+
+=head1 AUTHOR
+
+Nuno Carvalho, C<< <smash@cpan.org> >>
+
+J.Joao Almeida, C<< <jj@di.uminho.pt> >>
+
+Alberto Simoes, C<< <albie@alfarrabio.di.uminho.pt> >>
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008 Nuno Carvalho, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
     
 1 or not 1;

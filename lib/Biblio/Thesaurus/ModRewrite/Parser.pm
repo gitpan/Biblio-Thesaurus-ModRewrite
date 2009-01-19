@@ -18,18 +18,25 @@ use Parse::Yapp::Driver;
 
 =head1 NAME
 
-Biblio::Thesaurus::ModRewrite::Parser - The great new ...
+Biblio::Thesaurus::ModRewrite::Parser - this module implements the parser
+for OML programs
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 my $File;
 my $t;
+
+=head1 DESCRIPTION
+
+This module implements the parser used in Biblio::Thesaurus::ModRewrite
+to execute programs written in OML. OML is a domain specific language
+to describe operations to execut eon ontologies.
 
 =head1 FUNCTIONS
 
@@ -37,7 +44,7 @@ my $t;
 
 =head2 new
 
-TODO
+Create a new object.
 
 =cut
 
@@ -283,13 +290,13 @@ sub new {
 	[#Rule 1
 		 'program', 1,
 sub
-#line 30 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 37 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{ program=>$_[1] } }
 	],
 	[#Rule 2
 		 'statement_list', 3,
 sub
-#line 34 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 41 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 {
              my $n = keys %{$_[1]};
              +{ %{$_[1]}, $n=>$_[2]}
@@ -298,19 +305,19 @@ sub
 	[#Rule 3
 		 'statement_list', 0,
 sub
-#line 38 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 45 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{} }
 	],
 	[#Rule 4
 		 'statement', 3,
 sub
-#line 41 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 48 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{cond=>$_[1],action=>$_[3]} }
 	],
 	[#Rule 5
 		 'statement', 3,
 sub
-#line 42 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 49 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{cond=>'true',action=>$_[3]} }
 	],
 	[#Rule 6
@@ -319,61 +326,61 @@ sub
 	[#Rule 7
 		 'cond_block', 3,
 sub
-#line 46 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 53 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{$_[2] => [$_[1],$_[3]]} }
 	],
 	[#Rule 8
 		 'token', 3,
 sub
-#line 49 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 56 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { [ $_[1], $_[2], $_[3] ]  }
 	],
 	[#Rule 9
 		 'token', 4,
 sub
-#line 50 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 57 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { $_[3] }
 	],
 	[#Rule 10
 		 'token', 4,
 sub
-#line 51 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 58 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { $_[3] }
 	],
 	[#Rule 11
 		 'term', 1,
 sub
-#line 54 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 61 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{'term'=>$_[1]} }
 	],
 	[#Rule 12
 		 'term', 1,
 sub
-#line 55 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 62 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{'var'=>$_[1]} }
 	],
 	[#Rule 13
 		 'relation', 1,
 sub
-#line 58 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 65 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{'relation'=>$_[1]} }
 	],
 	[#Rule 14
 		 'relation', 1,
 sub
-#line 59 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 66 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{'var',$_[1]} }
 	],
 	[#Rule 15
 		 'oper', 1,
 sub
-#line 62 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 69 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { 'and' }
 	],
 	[#Rule 16
 		 'oper', 1,
 sub
-#line 63 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 70 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { 'or' }
 	],
 	[#Rule 17
@@ -382,7 +389,7 @@ sub
 	[#Rule 18
 		 'action_list', 2,
 sub
-#line 70 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 77 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 {
                  my $n = keys %{$_[1]};
                  +{ %{$_[1]}, $n=>$_[2] }
@@ -391,19 +398,19 @@ sub
 	[#Rule 19
 		 'action_list', 0,
 sub
-#line 74 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 81 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{} }
 	],
 	[#Rule 20
 		 'action', 4,
 sub
-#line 77 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 84 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{ $_[1] => $_[3] } }
 	],
 	[#Rule 21
 		 'action', 2,
 sub
-#line 78 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 85 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{ $_[1] => $_[2] } }
 	]
 ],
@@ -411,12 +418,12 @@ sub
     bless($self,$class);
 }
 
-#line 81 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 88 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 
 
 =head2 lex
 
-TODO
+Function used to tokenize source code.
 
 =cut
 
@@ -454,7 +461,7 @@ sub lex {
 
 =head2 yyerror
 
-TODO
+Function used to report errors.
 
 =cut
 
@@ -469,7 +476,7 @@ sub yyerror {
 
 =head2 init_lex
 
-TODO
+Function used to initialize everything we need.
 
 =cut
 
@@ -481,6 +488,23 @@ sub init_lex {
     undef $/;
     #$File = <>
 }
+
+=head1 AUTHOR
+
+Nuno Carvalho, C<< <smash@cpan.org> >>
+
+J.Joao Almeida, C<< <jj@di.uminho.pt> >>
+
+Alberto Simoes, C<< <albie@alfarrabio.di.uminho.pt> >>
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008 Nuno Carvalho, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
 
 # vim: set filetype=perl
 

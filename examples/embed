@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+use FindBin qw($Bin);
+use lib "$Bin/../lib";
+
+use Biblio::Thesaurus::ModRewrite::Embed;
+
+OML test
+$a 'city-of' $ARGV[0] => sub { print "found $a\n"; }.
+ENDOML
+
+#test('geografia.iso','Portugal');
+test('/home/smash/LOCAL/mestrado/natura/Biblio/modrewrite.r6656/examples/geografia.iso','Portugal');
