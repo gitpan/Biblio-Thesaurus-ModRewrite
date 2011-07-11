@@ -4,10 +4,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../lib";
 
 use Biblio::Thesaurus::ModRewrite::Embed;
+use Biblio::Thesaurus;
 
-OML test
-$a 'city-of' $ARGV[0] => sub { print "found $a\n"; }.
+
+OML test(term)
+$a 'city-of' term => del($a 'city-of' term).
 ENDOML
 
+my $obj = thesaurusLoad('geografia.iso');
+test($obj,'Portugal');
 #test('geografia.iso','Portugal');
-test('/home/smash/LOCAL/mestrado/natura/Biblio/modrewrite.r6656/examples/geografia.iso','Portugal');
+#test('/home/smash/LOCAL/mestrado/natura/Biblio/modrewrite.r6656/examples/geografia.iso','Portugal');

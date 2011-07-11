@@ -13,7 +13,7 @@ Version 0.02
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -243,15 +243,27 @@ sub calc_set {
         }
     }
     if (ref $c eq 'HASH') {
-        (my $op, my $l) = each %$c;
+        (my $k, my $v) = each %$c;
+        (my $op, my $l) = each %$v;
 
         if ($op eq 'term') {
             print "term only";
         }
         if ($op eq 'var') {
-            foreach ($obj->allTerms) {
-                push @return, +{$l=>$_};
-            }
+				if ($k eq 'term') {
+                foreach ($obj->allTerms) {
+                    push @return, +{$l=>$_};
+                }
+				}
+				if ($k eq 'rel') {
+                my %visited;
+                foreach my $i ($obj->allTerms) {
+                    foreach ($obj->relations($i)) {
+                        push @return, +{$l=>$_} unless($visited{$_});
+                        $visited{$_}++;
+                    }
+                }
+				}
             return \@return;
         }
 
@@ -385,8 +397,8 @@ my %callback = (
         sub {
             my $arg = shift;
             (ref $arg eq 'ARRAY') and
-             $DEBUG and print "\$obj->delRelation($arg->[0]->{'term'},$arg->[1]->{'relation'},$arg->[2]->{'term'})\n";
-             return $obj->delRelation($arg->[0]->{'term'},$arg->[1]->{'relation'},$arg->[2]->{'term'});
+             $DEBUG and print "\$obj->deleteRelation($arg->[0]->{'term'},$arg->[1]->{'relation'},$arg->[2]->{'term'})\n";
+             return $obj->deleteRelation($arg->[0]->{'term'},$arg->[1]->{'relation'},$arg->[2]->{'term'});
         },
 );
 
@@ -410,7 +422,7 @@ sub execute {
             }
             $code = $code . $args;
             eval $code;
-            warn $@ if $@;
+            warn "$@ in block{$code}" if $@;
         }
         else {
             # not a sub run an op from the callback table

@@ -8,7 +8,7 @@ use Biblio::Thesaurus::ModRewrite;
 
 sub proc {
 	my $code = shift;
-	my $obj = thesaurusLoad('examples/geografia.iso');
+	my $obj = thesaurusLoad('examples/geo.iso');
 	my $t = Biblio::Thesaurus::ModRewrite->new($obj);
 	$t->process($code);
 }

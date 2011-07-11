@@ -13,7 +13,7 @@ in Perl code.
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -42,10 +42,8 @@ found.
 
 sub buildOML {
 	(my $name, my $list, my $code) = @_;
+	$list = '' unless $list;
 
-print Dumper $name;
-print Dumper $list;
-print Dumper $code;
 	# begin
 	my $c = "sub $name {\n";
 	
@@ -53,7 +51,12 @@ print Dumper $code;
 	$c .= "\tmy \$ont = shift;\n";
 	$c .= "\tuse Biblio::Thesaurus;\n";
 	$c .= "\tuse Biblio::Thesaurus::ModRewrite;\n";
-	$c .= "\tmy \$obj = thesaurusLoad(\$ont);\n\n";
+	$c .= "\tmy \$obj;\n";
+	$c .= "\tif (ref(\$ont) eq 'Biblio::Thesaurus') {\n";
+	$c .= "\t\t\$obj = \$ont;\n";
+	$c .= "\t} else {\n";
+	$c .= "\t\t\$obj = thesaurusLoad(\$ont);\n";
+	$c .= "\t}\n\n";
 
 	# handle OML code
 	$c .= "my \$code=<<'EOF';\n";
@@ -67,7 +70,7 @@ print Dumper $code;
 	$c .= "\t} else {\n";
 	$c .= "\t\t\@tmp = split /,/, \"$list\";\n";
 	$c .= "\t\tforeach (\@_) { my \$i = shift \@tmp;\n";
-	$c .= "\t\t\t\$code =~ s/\\b\$i\\b/\$_/g;\n";
+	$c .= "\t\t\t\$code =~ s/\\b\$i\\b/'\$_'/g;\n";
 	$c .= "\t\t}\n";
 	$c .= "\t}\n";
 

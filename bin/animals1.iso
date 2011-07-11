@@ -1,8 +1,8 @@
 %externals SN URL
 
-%languages 
+%language EN 
 
-%baselanguage ?
+%baselanguage EN
 
 %inverse NT BT
 %inverse RT RT
@@ -21,6 +21,10 @@
 %description BT Broader term
 
 
+Animal
+BT Carnivora
+BT Felidae
+BT Panthera
 
 Carnivora
 BT	Felidae

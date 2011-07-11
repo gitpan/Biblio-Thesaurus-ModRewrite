@@ -1,3 +1,0 @@
-$city 'CITY-OF' $country AND $country 'COUNTRY-OF' Europa
-=> 
-add ($city 'CITY-OF' Europa).

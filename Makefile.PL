@@ -19,6 +19,8 @@ WriteMakefile(
     PREREQ_PM => {
         'Test::More' => 0,
         'Test::Output' => 0,
+        'Parse::Yapp' => 0,
+        'Biblio::Thesaurus' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Biblio-Thesaurus-ModRewrite-*' },

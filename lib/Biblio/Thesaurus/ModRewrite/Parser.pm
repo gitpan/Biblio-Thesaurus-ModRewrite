@@ -27,10 +27,20 @@ Version 0.02
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 my $File;
 my $t;
+### Reg exp for blocks
+
+my $bl0 = qr((?:\\[{}]|[^{}])*);
+my $bl1 = qr(\{$bl0\});
+my $bl2 = qr(\{$bl0(?:$bl1*$bl0)*\});
+my $bl3 = qr(\{$bl0(?:$bl2*$bl0)*\});
+my $bl4 = qr(\{$bl0(?:$bl3*$bl0)*\});
+my $blmidle = qr($bl0(?:$bl4*$bl0)*);
+
+
 
 =head1 DESCRIPTION
 
@@ -290,13 +300,13 @@ sub new {
 	[#Rule 1
 		 'program', 1,
 sub
-#line 37 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 47 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{ program=>$_[1] } }
 	],
 	[#Rule 2
 		 'statement_list', 3,
 sub
-#line 41 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 51 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 {
              my $n = keys %{$_[1]};
              +{ %{$_[1]}, $n=>$_[2]}
@@ -305,19 +315,19 @@ sub
 	[#Rule 3
 		 'statement_list', 0,
 sub
-#line 45 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 55 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{} }
 	],
 	[#Rule 4
 		 'statement', 3,
 sub
-#line 48 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 58 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{cond=>$_[1],action=>$_[3]} }
 	],
 	[#Rule 5
 		 'statement', 3,
 sub
-#line 49 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 59 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{cond=>'true',action=>$_[3]} }
 	],
 	[#Rule 6
@@ -326,61 +336,61 @@ sub
 	[#Rule 7
 		 'cond_block', 3,
 sub
-#line 53 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 63 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{$_[2] => [$_[1],$_[3]]} }
 	],
 	[#Rule 8
 		 'token', 3,
 sub
-#line 56 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 66 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { [ $_[1], $_[2], $_[3] ]  }
 	],
 	[#Rule 9
 		 'token', 4,
 sub
-#line 57 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
-{ $_[3] }
+#line 67 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+{ +{'term'=>$_[3]} }
 	],
 	[#Rule 10
 		 'token', 4,
 sub
-#line 58 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
-{ $_[3] }
+#line 68 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+{ +{'rel'=>$_[3]} }
 	],
 	[#Rule 11
 		 'term', 1,
 sub
-#line 61 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 71 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{'term'=>$_[1]} }
 	],
 	[#Rule 12
 		 'term', 1,
 sub
-#line 62 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 72 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{'var'=>$_[1]} }
 	],
 	[#Rule 13
 		 'relation', 1,
 sub
-#line 65 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 75 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{'relation'=>$_[1]} }
 	],
 	[#Rule 14
 		 'relation', 1,
 sub
-#line 66 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 76 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{'var',$_[1]} }
 	],
 	[#Rule 15
 		 'oper', 1,
 sub
-#line 69 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 79 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { 'and' }
 	],
 	[#Rule 16
 		 'oper', 1,
 sub
-#line 70 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 80 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { 'or' }
 	],
 	[#Rule 17
@@ -389,7 +399,7 @@ sub
 	[#Rule 18
 		 'action_list', 2,
 sub
-#line 77 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 87 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 {
                  my $n = keys %{$_[1]};
                  +{ %{$_[1]}, $n=>$_[2] }
@@ -398,19 +408,19 @@ sub
 	[#Rule 19
 		 'action_list', 0,
 sub
-#line 81 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 91 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{} }
 	],
 	[#Rule 20
 		 'action', 4,
 sub
-#line 84 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 94 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{ $_[1] => $_[3] } }
 	],
 	[#Rule 21
 		 'action', 2,
 sub
-#line 85 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 95 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 { +{ $_[1] => $_[2] } }
 	]
 ],
@@ -418,7 +428,7 @@ sub
     bless($self,$class);
 }
 
-#line 88 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
+#line 98 "lib/Biblio/Thesaurus/ModRewrite/Parser.yp"
 
 
 =head2 lex
@@ -430,14 +440,15 @@ Function used to tokenize source code.
 sub lex {
     for ($File) {
         s!^\s+!!;
+        s!^\#.*?\n!!;
         ($_ eq '')    and return ('',undef);
 
         s!^(\=\>)!!    and return('ARROW',$1);
-        s!^(and|\&\&)!!i    and return('AND',$1);
-        s!^(or|\|\|)!!i    and return('OR',$1);
+        s!^(and|\&\&|∧)!!i    and return('AND',$1);
+        s!^(or|\|\||∨)!!i    and return('OR',$1);
         s!^(not|\!)!!i    and return('NOT',$1);
         s!^(do|begin|end)!!i    and return('DO',$1);
-        s!^(\=\>)!!    and return('ARROW',$1);
+        s!^(\=\>|⇒)!!    and return('ARROW',$1);
         s!^(\:)!!    and return('COLON',$1);
         s!^(\()!!    and return('OPEN',$1);
         s!^(\))!!    and return('CLOSE',$1);
@@ -445,11 +456,12 @@ sub lex {
         s!^(\.)!!    and return('DOT',$1);
         s!^(sub)!!    and return('SUB',$1);
         #s!^\{(.*)\}!!s    and print "|$1|\n" and return('CODE',$1);
-        s!^\{([^{}]*(\{[^{}]*\}[^{}]*)*)\}!!s and return('CODE',$1);
+        #s!^\{([^{}]*(\{[^{}]*\}[^{}]*)*)\}!!s and return('CODE',$1);
+        s!^\{($blmidle)\}!!s and return('CODE',$1);
 
         s!^(term)!!    and return('TERM',$1);
         s!^(rel)!!    and return('REL',$1);
-        s!^(add|delete)!!    and return('ACTION',$1);
+        s!^(add|del)!!    and return('ACTION',$1);
         if (s!^(\w+|\'.*?\'|\".*?\")!!) {
             my $zbr = $1;
             $zbr =~ s/\'|\"//g;
